@@ -64,7 +64,8 @@ enum Sounds {
   SFXSilence,
   SFXJump,
   SFXMushroom,
-  SFXHit
+  SFXHit,
+  SFXCoin
 };
 
 class Room;

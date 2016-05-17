@@ -93,7 +93,8 @@ PROGMEM const unsigned char BigSquarioSprite[] {
   0b00011111
 };
 PROGMEM const unsigned char TriangleoSprite[] {
-  8, 8, 1, 0, // Width, Height, # of Frames, Flags
+  8, 8, 1,    // Width, Height, # of Frames
+  0b10,       // Flags
   1, 0b11,    // Speed, AI Setting
   1,          // Number of masks
   0b01000000, // Frame 1 data
@@ -115,7 +116,8 @@ PROGMEM const unsigned char TriangleoSprite[] {
   0b00000000
 };
 PROGMEM const unsigned char StarmanoSprite[] {
-  8, 8, 1, 0, // Width, Height, # of Frames, Flags
+  8, 8, 1,    // Width, Height, # of Frames
+  0b10,       // Flags
   2, 0b1111,  // Speed, AI Setting
   0,          // Number of masks
   0b10000100, // Frame 1 data
@@ -128,9 +130,10 @@ PROGMEM const unsigned char StarmanoSprite[] {
   0b10000100,
 };
 PROGMEM const unsigned char SmileoSprite[] {
-  8, 8, 1, 0, // Width, Height, # of Frames, Flags
+  8, 8, 1,    // Width, Height, # of Frames
+  0b10,       // Flags
   2, 0b1,     // Speed, AI Setting
-  0,          // Number of masks
+  1,          // Number of masks
   0b00111100, // Frame 1 data
   0b01000010,
   0b10000001,
@@ -138,12 +141,23 @@ PROGMEM const unsigned char SmileoSprite[] {
   0b10100001,
   0b10101001,
   0b01000010,
+  0b00111100,
+  
+  0b00111100, // Mask 1 data
+  0b01111110,
+  0b11111111,
+  0b11111111,
+  0b11111111,
+  0b11111111,
+  0b01111110,
   0b00111100
+
 };
 PROGMEM const unsigned char MushroomSprite[] {
-  8, 8, 1, 0, // Width, Height, # of Frames, Flags
+  8, 8, 1,    // Width, Height, # of Frames
+  0b10,       // Flags
   1, 0b1,     // Speed, AI Setting
-  0,          // Number of masks
+  1,          // Number of masks
   0b00011000, // Frame 1 data
   0b00100100,
   0b11101010,
@@ -151,150 +165,91 @@ PROGMEM const unsigned char MushroomSprite[] {
   0b10101001,
   0b11110010,
   0b00100100,
-  0b00011000
-};
-
-
-PROGMEM const unsigned char tSmallSquario[] = {
-  0b00000000, // 1
-  0b00111110,
-  0b11100010,
-  0b00100010,
-  0b11100010,
-  0b00100010,
-  0b00111110,
-  0b00000000
-};
-PROGMEM const unsigned char tSmallSquarioMask[] = {
-  0b00000000, // 1
-  0b00111110,
-  0b11111110,
-  0b00111110,
-  0b11111110,
-  0b00111110,
-  0b00111110,
-  0b00000000
-};
-PROGMEM const unsigned char tBigSquario[] = {
-  0b11111110, // 0xFE,
-  0b00000010, // 0x02,
-  0b00000010, // 0x02,
-  0b00000010, // 0x02,
-  0b00000010, // 0x02,
-  0b00000010, // 0x02,
-  0b00000010, // 0x02,
-  0b11111110, // 0xFE
-  0b00011111,
-  0b00010000,
-  0b11110000,
-  0b00010000,
-  0b11110000,
-  0b00010000,
-  0b00010000,
-  0b00011111
-};
-PROGMEM const unsigned char tBigSquarioMask[] = {
-  0b11111110, // 0xFE,
-  0b11111110, // 0x02,
-  0b11111110, // 0x02,
-  0b11111110, // 0x02,
-  0b11111110, // 0x02,
-  0b11111110, // 0x02,
-  0b11111110, // 0x02,
-  0b11111110, // 0xFE
-  0b00011111,
-  0b00011111,
-  0b11111111,
-  0b00011111,
-  0b11111111,
-  0b00011111,
-  0b00011111,
-  0b00011111
-};
-PROGMEM const unsigned char tTriangleo[] = {
-  0b01000000, // 1
-  0b01110000,
-  0b11001100,
-  0b01000011,
-  0b11000010,
-  0b01001100,
-  0b01110000,
-  0b01000000
-};
-PROGMEM const unsigned char tTriangleoMask[] = {
-  0b00000000, // 1
-  0b00111000,
-  0b11111110,
-  0b00111111,
-  0b11111111,
-  0b00111110,
-  0b00111000,
-  0b00000000
-};
-PROGMEM const unsigned char tStarmano[] = {
-  0b10000100,
-  0b11101100,
-  0b01111100,
-  0b00111111,
-  0b00111111,
-  0b01111100,
-  0b11101100,
-  0b10000100
-};
-PROGMEM const unsigned char tBolt[] = {
-  0b00001000, // row1
-  0b00001100,
-  0b00010100,
-  0b00100010,
-  0b11100010,
-  0b01000001,
-  0b00000001,
-  0b00000110,
-  0b00101000,
-  0b01010000,
-  0b10000000,
-  0b00000000,
-  0b00000000,
-  0b00000000,
-  0b00000000,
-  0b00000000,
-  0b00000000, // row2
-  0b00000000,
-  0b00000000,
-  0b00000000,
-  0b00000000,
-  0b00000001,
-  0b00000001,
-  0b00000110,
-  0b00001110,
-  0b00001000,
-  0b00010010,
-  0b00100101,
-  0b00101000,
-  0b01110000,
-  0b01000000,
-  0b10000000
-};
-PROGMEM const unsigned char tSmileo[] = {
-  0b00111100,
-  0b01000010,
-  0b10000001,
-  0b10101001,
-  0b10100001,
-  0b10101001,
-  0b01000010,
-  0b00111100
-};
-PROGMEM const unsigned char tMushroom[] = {
   0b00011000,
-  0b00100100,
-  0b11101010,
-  0b10100001,
-  0b10101001,
-  0b11110010,
-  0b00100100,
+  
+  0b00011000, // Frame 1 mask
+  0b00111100,
+  0b11111110,
+  0b11111111,
+  0b11111111,
+  0b11111110,
+  0b00111100,
   0b00011000
 };
+PROGMEM const unsigned char BoltSprite[] {
+  16, 16, 1,  // Width, Height, # of Frames
+  0b11,       // Flags
+  2, 0,       // Speed, AI Setting
+  1,          // Number of masks
+
+  0b00000000, // Frame 1 data
+  0b00000000,
+  0b00000000,
+  0b00000000,
+  0b00000000,
+  0b10000000,
+  0b01010000,
+  0b00101000,
+  0b00000110,
+  0b00000001,
+  0b01000001,
+  0b11100010,
+  0b00100010,
+  0b00010100,
+  0b00001100,
+  0b00001000, 
+  0b10000000, // row2
+  0b01000000,
+  0b01110000,
+  0b00101000,
+  0b00100101,
+  0b00010010,
+  0b00001000,
+  0b00001110,
+  0b00000110,
+  0b00000001,
+  0b00000001,
+  0b00000000,
+  0b00000000,
+  0b00000000,
+  0b00000000,
+  0b00000000,
+  
+  0b00000000, // Mask 1 data
+  0b00000000,
+  0b00000000,
+  0b00000000,
+  0b00000000,
+  0b10000000,
+  0b11010000,
+  0b11101000,
+  0b11111110,
+  0b11111111,
+  0b01111111,
+  0b11111110,
+  0b00111110,
+  0b00011100,
+  0b00001100,
+  0b00001000, 
+  
+  0b10000000, // row2
+  0b01000000,
+  0b01110000,
+  0b00111000,
+  0b00111101,
+  0b00011111,
+  0b00001111,
+  0b00001111,
+  0b00000111,
+  0b00000001,
+  0b00000001,
+  0b00000000,
+  0b00000000,
+  0b00000000,
+  0b00000000,
+  0b00000000,
+};
+
 PROGMEM const unsigned char tHammer[] = {
   0b00000000,
   0b00001111,
@@ -633,6 +588,7 @@ PROGMEM const byte Chorus [] = {
 #define nF2          175  // 0x3
 #define nA2          220  // 0x4
 #define nD3          294  // 0x5
+#define nB5          1975 // 0xF
 #define nC5S         1109 // 0x9
 #define nD5S         1245 // 0xB
 #define nC6          2094 // 0xD
@@ -641,9 +597,9 @@ PROGMEM const unsigned int SFXFrequencies [] {
   nB1, nD2, nF2, // all bong (012)
   nA2, nD3, nA3, nD4,  // bling (3456)
   nC5, nC5S, nD5, nD5S, nE5, // beep & part of bling 4 (789AB)
-  nC6, nE6 // (CDE)
+  nC6, nE6, nB5 // (CDE)
 };
-PROGMEM const byte SFX_Jump [] = {
+PROGMEM const byte SFX_Hit [] = {
   0, 16,
   0xC1, //0x00, // 0x91,0x4C, 0,16, 0x81, // E5-
   0xB1, //0x00, // 0x91,0x4B, 0,16, 0x81, // D5s-
@@ -651,7 +607,7 @@ PROGMEM const byte SFX_Jump [] = {
   0x91, //0x00, // 0x91,0x49, 0,16, 0x81, // C5s-
   0xFF
 };
-PROGMEM const byte SFX_Hit [] = {
+PROGMEM const byte SFX_Jump [] = {
   0, 16,
   0x21, //0x00, // 0x91,0x26, 0,16, 0x81, // D2-
   0x11, //0x00, // 0x91,0x23, 0,16, 0x81, // B1-
@@ -671,6 +627,11 @@ PROGMEM const byte SFX_Mushroom [] = {
   0x71, //0x00, // 0x91,0x3E, 0,64, 0x81, // D4-
   0xFF
 };
-
+PROGMEM const byte SFX_Coin [] = {
+  0, 16, 
+  0xF1,
+  0xE4,
+  0xff
+};
 
 #endif

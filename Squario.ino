@@ -12,11 +12,10 @@ unsigned long currTime;
 unsigned long prevTime = 0;
 bool SoundOn = true;
 void setup() {
-  Serial.begin(9600);
   display.begin();
 }
+uint8_t RandomSeedSeed = 1;
 void TitleScreen() {
-  uint8_t RandomSeedSeed = 1;
   while (true) {
     delay(250);
     byte input = display.buttonsState();
@@ -63,6 +62,7 @@ void SoundEngine() {
       case SFXJump:     SFX = SFX_Jump; break;
       case SFXMushroom: SFX = SFX_Mushroom; break;
       case SFXHit:      SFX = SFX_Hit; break;
+      case SFXCoin:     SFX = SFX_Coin; break;
     }
     SFX_Counter = 2;
     Game.SFX = 0;

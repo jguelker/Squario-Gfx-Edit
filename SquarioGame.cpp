@@ -241,6 +241,7 @@ void Sprite::Duck( ) {
   }
 }
 void Sprite::HeadCollision( ) {
+  if ( Flags() & 0b10 ) return;
   byte LeftCheck = Collide( x, y-1 );
   byte RightCheck = Collide( RightX(), y-1 );
   
@@ -273,6 +274,10 @@ void AISprite::Activate( const unsigned char * DataPointer, int tX, int tY ) {
   Active = true;
   Facing = Left;
   LoadSprite( DataPointer, tX*TileSize, tY*TileSize );
+  if ( DataPointer == BoltSprite ) {
+    vx = -4;
+    vy = 2;
+  }
   Think();
 }
 void AISprite::Deactivate( ) {
@@ -371,16 +376,16 @@ void Map::GenerateRoom( int RoomNum ) {
       if ( RoomNum ) {
         if ( !random(10) ) Gap = random(2,5);
         if ( tSpawnBarrier > SpawnBarrier ) {
-          if ( !random( 5 ) ) {
-            switch ( random(3) ) {
-              case 0: Game->AddMob( TriangleoSprite,  tSpawnBarrier + x, Floor - 2 ); break;
-              case 1: Game->AddMob( StarmanoSprite,   tSpawnBarrier + x, Floor - 2 ); break;
-              case 2: Game->AddMob( SmileoSprite,     tSpawnBarrier + x, Floor - 2 ); break;
-            }
+          if ( !random( 6 ) ) {
+            uint8_t MobSelector = random(20);
+            if      ( MobSelector < 10 ) Game->AddMob( TriangleoSprite,  tSpawnBarrier + x, Floor - 2 );
+            else if ( MobSelector < 16 ) Game->AddMob( SmileoSprite,     tSpawnBarrier + x, Floor - 2 );
+            else if ( MobSelector < 19 ) Game->AddMob( StarmanoSprite,   tSpawnBarrier + x, Floor - 2 );
+            else                         Game->AddMob( BoltSprite,       tSpawnBarrier + x, Ceiling + 2 );
           }
           if ( !random( 16 ) && !Gap ) {
             int y = random( Floor - 7, Floor - 3 );
-            if ( !random(5) ) AddObject ( STMushBlock, tSpawnBarrier + x, y );
+            if ( !random(4) ) AddObject ( STMushBlock, tSpawnBarrier + x, y );
             else              AddObject ( STQBlock, tSpawnBarrier + x, y );
           }
         }
@@ -422,7 +427,7 @@ void Map::HandleObject( int x, int y ) {
   for ( int a = 0; a < MapObjects; a++ ) {
     if ( objects[a].x == x && objects[a].y == y ) {
       switch ( objects[a].type ) {
-        case STQBlock: Game->Coins++; objects[a].type = STBQBlock; break;
+        case STQBlock: Game->SFX = SFXCoin; Game->Coins++; objects[a].type = STBQBlock; break;
         case STMushBlock:
           Game->AddMob ( MushroomSprite, x, y-1 );
           objects[a].type = STBQBlock; break;
@@ -457,24 +462,12 @@ void Map::LoadMap( ) {
   if (RoomBeforePlayerIsIn < 0) RoomBeforePlayerIsIn = 0;
   if (RoomBeforePlayerIsIn > FirstRoom) {
     FirstRoom = RoomBeforePlayerIsIn;
-//  for (uint8_t a = 0; a < MapRooms; a++) GenerateRoom( RoomBeforePlayerIsIn + a );
     GenerateRoom( RoomBeforePlayerIsIn + MapRooms - 1 );
-//  LastLoadLocation = Game->Player.x;
   }
 }
 bool Map::CheckTile( int x, int y ) {
   int room = ( x / RoomWidth ) % MapRooms;
   return rooms[room].ReadTile ( x % RoomWidth, y );
-/*  if ( x < MinXTile() || x > MaxXTile() || y < 0 || y > MaxYTile() ) return false;
-  uint8_t BytesPerColumn = ( RoomHeight / 8 );
-  uint8_t ByteOfColumn = y / 8;
-  uint8_t BitOfColumn = y % 8;
-  uint8_t room = ( x / RoomWidth ) % MapRooms;
-  uint8_t RoomByte = x % RoomWidth;
-  unsigned char chunk = rooms[room].data[(RoomByte*BytesPerColumn) + ByteOfColumn];
-  if ( chunk & ( 0b10000000 >> BitOfColumn ) ) return true;
-  else return false;
-*/
 }
 byte Map::CheckObject ( int x, int y ) {
   if ( y < 0 ) return 0;
