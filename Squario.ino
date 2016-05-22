@@ -163,16 +163,16 @@ void enterHighScore(byte file) {
         if ( display.pressed(LEFT_BUTTON) || display.pressed(B_BUTTON)) {
           index--;
           if (index < 0) index = 0;
-          else display.tunes.tone(1046, 250);
+          else if ( SoundOn ) display.tunes.tone(1046, 250);
         }
         if (display.pressed(RIGHT_BUTTON)) {
           index++;
           if (index > 2) index = 2;
-          else display.tunes.tone(1046, 250);
+          else if ( SoundOn ) display.tunes.tone(1046, 250);
         }
         if (display.pressed(DOWN_BUTTON)) {
           initials[index]++;
-          display.tunes.tone(523, 250);
+          if ( SoundOn ) display.tunes.tone(523, 250);
           // A-Z 0-9 :-? !-/ ' '
           if (initials[index] == '0') initials[index] = ' ';
           if (initials[index] == '!') initials[index] = 'A';
@@ -181,7 +181,7 @@ void enterHighScore(byte file) {
         }
         if (display.pressed(UP_BUTTON)) {
           initials[index]--;
-          display.tunes.tone(523, 250);
+          if ( SoundOn ) display.tunes.tone(523, 250);
           if (initials[index] == ' ') initials[index] = '?';
           if (initials[index] == '/') initials[index] = 'Z';
           if (initials[index] == 31) initials[index] = '/';
@@ -190,9 +190,9 @@ void enterHighScore(byte file) {
         if (display.pressed(A_BUTTON)) {
           if (index < 2) {
             index++;
-            display.tunes.tone(1046, 250);
+            if ( SoundOn ) display.tunes.tone(1046, 250);
           } else {
-            display.tunes.tone(1046, 250);
+            if ( SoundOn ) display.tunes.tone(1046, 250);
             break;
           }
         }
