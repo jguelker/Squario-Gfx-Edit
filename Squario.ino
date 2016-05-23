@@ -8,9 +8,11 @@
 Arduboy display;
 SquarioGame Game( &display );
 
+char text[16];
 unsigned long currTime;
 unsigned long prevTime = 0;
 bool SoundOn = true;
+
 void setup() {
   display.begin();
 }
@@ -30,7 +32,8 @@ void TitleScreen() {
       else RandomSeedSeed--;
     }
     display.clear();
-    display.drawBitmap(0,0,Titular,128,64,1);
+    display.drawBitmap(14,0,TitleSquarioText,96,32,1);
+    display.drawBitmap(66,29,TitleSquarioGuys,53,32,1);
     display.setCursor(0,48); display.print(F("Seed:  ")); display.print(RandomSeedSeed);
     display.setCursor(0,56); display.print(F("Sound: "));
     if ( SoundOn ) display.print(F("On"));
@@ -55,25 +58,18 @@ void SoundEngine() {
     SoundCounter++;
     if ( SoundCounter == 16 ) SoundCounter = 0;
   }
-  
   if (Game.SFX) {
     SFXNoteSet = SFXFrequencies;
-    switch (Game.SFX) {
-      case SFXJump:     SFX = SFX_Jump; break;
-      case SFXMushroom: SFX = SFX_Mushroom; break;
-      case SFXHit:      SFX = SFX_Hit; break;
-      case SFXCoin:     SFX = SFX_Coin; break;
-    }
+    SFX = Game.SFX;
+    Game.SFX = NULL;
     SFX_Counter = 2;
-    Game.SFX = 0;
     lastNote = 0;
   }
-
   if (SFX) {
     if ( currTime < lastNote + duration ) return;
     byte Packet = pgm_read_byte(SFX + SFX_Counter++);
     if (Packet == 0xFF) {
-      SFX = 0;
+      SFX = NULL;
       SFX_Counter = -1;
       return;
     }
@@ -106,8 +102,8 @@ void loop() {
       Game.Cycle();
       if ( Game.Event ) Game.Draw();
       display.setCursor(0,0);
-      display.print("Score: ");
-      display.print(Game.Score);
+//    display.print("Score: ");
+//    display.print(Game.Score);
       display.display();
     }
   }
@@ -125,7 +121,6 @@ void enterHighScore(byte file) {
   int address = file * 10 * 5;
   byte hi, lo;
   char initials[3];
-  char text[16];
   char tmpInitials[3];
   unsigned int tmpScore = 0;
 
@@ -226,8 +221,6 @@ void enterHighScore(byte file) {
   }
 }
 boolean displayHighScores(byte file) {
-  char text[16];
-  char initials[3];
   unsigned int Score;
   byte y = 10;
   byte x = 24;
@@ -238,30 +231,22 @@ boolean displayHighScores(byte file) {
   display.clear();
   display.setCursor(32, 0);
   display.print(F("HIGH SCORES"));
-//display.display();
-
-  for(int i = 0; i < 10; i++)
-  {
+  for(int i = 0; i < 10; i++) {
     sprintf(text, "%2d", i+1);
     display.setCursor(x,y+(i*8));
     display.print(text);
-//  display.display();
     hi = EEPROM.read(address + (5*i));
     lo = EEPROM.read(address + (5*i) + 1);
-
     if ((hi == 0xFF) && (lo == 0xFF)) Score = 0;
     else Score = (hi << 8) | lo;
-
-    initials[0] = (char)EEPROM.read(address + (5*i) + 2);
-    initials[1] = (char)EEPROM.read(address + (5*i) + 3);
-    initials[2] = (char)EEPROM.read(address + (5*i) + 4);
-
-    if (Score > 0)
-    {
-      sprintf(text, "%c%c%c %u", initials[0], initials[1], initials[2], Score);
+    if (Score > 0) {
+      sprintf( text, "%c%c%c %u", 
+        (char)EEPROM.read(address + (5*i) + 2),
+        (char)EEPROM.read(address + (5*i) + 3),
+        (char)EEPROM.read(address + (5*i) + 4),
+        Score );
       display.setCursor(x + 24, y + (i*8));
       display.print(text);
-//    display.display();
     }
   }
   display.display();

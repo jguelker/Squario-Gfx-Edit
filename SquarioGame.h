@@ -39,20 +39,6 @@ enum ObjectTypes {
   
   NumObjectTypes
 };
-enum MapTypes {
-  MTMaze = 0,
-  MTHorizontal,
-  MTVertical,
-  MTFalling,
-  NumMapTypes
-};
-enum ItemTypes {
-  ITEmpty,
-  ITHammer,
-  ITAxe,
-  ITGun,
-  NumItemTypes
-};
 enum EventTypes {
   ETOff = 0,
   ETPlaying,
@@ -60,45 +46,20 @@ enum EventTypes {
   ETPipeDrop,
   ETNum
 };
-enum Sounds {
-  SFXSilence,
-  SFXJump,
-  SFXMushroom,
-  SFXHit,
-  SFXCoin
-};
 
 class Room;
 class Map;
-//class Item;
 class Sprite;
 class AISprite;
 class SquarioGame;
-/*
-class Item {
-  public:
-    void LoadItem( byte _Type );
-    void Draw( );
-    void Cycle( );
-    void Use( );
-    
-    void Hammer( );
-    
-    bool                  Used;
-    SquarioGame         * Game;
-    const unsigned char * tile;
-    const unsigned char * mask;
-    byte                  Type;
-    uint8_t               Frame, MaxFrame, w, h;
-    int                   x, y, Counter;
-};
-*/
+
 class Sprite {
   public:
     void LoadSprite( const unsigned char * DataPointer, int tX, int tY );
     void ClearSprite( );
     bool IsIn ( int tX, int tY );
     bool IsInTopHalf ( int tX, int tY );
+    virtual bool GetPixelAbsolute( int tX, int tY );
     byte Collide( int tX, int tY );
     bool CollisionCheckX( byte direction );
     bool CollisionCheckY( byte direction );
@@ -108,7 +69,6 @@ class Sprite {
     void Move( );
     bool Jump( );
     void Duck( );
-    void Cycle( );
     void Draw( );
     
     uint8_t Width( );
@@ -185,10 +145,14 @@ class SquarioGame {
   public:
     SquarioGame( Arduboy * display );
     void NewGame( );
+    void StartLevel( );
     void Cycle( );
+    bool TestCollision( Sprite * TestSprite1, AISprite * TestSprite2 );
+    bool TestRoughCollision( Sprite * TestSprite1, AISprite * TestSprite2 );
+    bool TestPixelCollision( Sprite * TestSprite1, AISprite * TestSprite2 );
     void Draw( );
     void Die( );
-    void BeginMap( );
+    void DiePrint( uint8_t y, unsigned int i );
     void DrawMap( );
     void DrawMobs( );
     void AddMob( const unsigned char * DataPointer, int x, int y );
@@ -201,17 +165,17 @@ class SquarioGame {
     
     Arduboy             * Display;
     Sprite                Player;
-//  Item                  MainHand;
     AISprite              Mobs[ SpriteCap ];
     Map                   Level;
 
     unsigned int          Score;
+    unsigned int          DistancePoints;
     int                   Coins, Lives, MapNumber;
     byte                  Inventory;
     int                   CameraX, CameraY;
     byte                  Event;
     int                   EventCounter;
-    byte                  SFX;
+    const byte *          SFX;
     byte                  Seeds[ GameSeeds ];
 };
 
