@@ -48,12 +48,12 @@ PROGMEM const unsigned char SmallSquarioSprite[] {
   0b00000000,
   
   0b00000000, // Frame 1 Mask
-  0b00111110,
+  0b10111110,
   0b11111110,
   0b00111110,
   0b11111110,
   0b00111110,
-  0b00111110,
+  0b10111110,
   0b00000000
 };
 PROGMEM const unsigned char BigSquarioSprite[] {
@@ -85,14 +85,14 @@ PROGMEM const unsigned char BigSquarioSprite[] {
   0b11111110, 
   0b11111110, 
   0b11111110, 
-  0b00011111,
-  0b00011111,
-  0b11111111,
+  0b10011111,
   0b00011111,
   0b11111111,
   0b00011111,
+  0b11111111,
   0b00011111,
-  0b00011111
+  0b00011111,
+  0b10011111
 };
 PROGMEM const unsigned char TriangleoSprite[] {
   8, 8, 1,    // Width, Height, # of Frames

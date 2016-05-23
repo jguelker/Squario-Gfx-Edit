@@ -300,7 +300,7 @@ void Map::GenerateRoom( int RoomNum ) {
               if ( RoomNum > 8 ) Game->AddMob( BoltSprite, tSpawnBarrier + x, 2 );
             }
           }
-          if ( !random( 16 ) && !Gap ) {
+          if ( !random( 16 ) && !Gap && Floor > Ceiling + 5 ) {
             int y = random( max( Floor - 7, Ceiling + 2 ), Floor - 3 );
             if ( !random(4) ) AddObject ( STMushBlock, tSpawnBarrier + x, y );
             else              AddObject ( STQBlock, tSpawnBarrier + x, y );
