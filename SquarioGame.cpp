@@ -649,6 +649,14 @@ void SquarioGame::ButtonRelease( uint8_t pButton ) {
   if ( !ButtonState[ pButton ] ) return;
   ButtonState[ pButton ] = false;
 }
+void SquarioGame::ActivateButtonCD( ) {
+  lastPress = millis();
+}
+bool SquarioGame::ButtonOffCD( ) {
+  if ( millis() > lastPress + BUTTONCD ) return true;
+  return false;
+}
+
 int SquarioGame::getTextOffset(int s) {
   if (s > 9999) { return 20; }
   if (s > 999) { return 15; }

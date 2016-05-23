@@ -161,6 +161,8 @@ class SquarioGame {
     void ButtonPress( uint8_t pButton );
     void ButtonRelease( uint8_t pButton );
     bool ButtonState[ NumButtons ];
+    void ActivateButtonCD( );
+    bool ButtonOffCD( );
     int getTextOffset( int s );
     
     Arduboy             * Display;
@@ -177,6 +179,7 @@ class SquarioGame {
     int                   EventCounter;
     const byte *          SFX;
     byte                  Seeds[ GameSeeds ];
+    unsigned long         lastPress;
 };
 
 

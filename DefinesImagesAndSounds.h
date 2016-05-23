@@ -3,6 +3,7 @@
 #include <Arduboy.h>
 
 #define FPSDELAY      1000/30
+#define BUTTONCD      200
 #define GameSeeds     4
 #define TileSize      8
 #define MinLevelWidth 12

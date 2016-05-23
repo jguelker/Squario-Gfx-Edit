@@ -18,18 +18,21 @@ void setup() {
 }
 uint8_t RandomSeedSeed = 1;
 void TitleScreen() {
+  Game.ActivateButtonCD( );
   while (true) {
-    delay(250);
-    byte input = display.buttonsState();
-    if ( input & A_BUTTON || input & B_BUTTON ) break;
-    if ( ( input & LEFT_BUTTON ) || ( input & RIGHT_BUTTON ) ) SoundOn = !SoundOn;
-    if ( input & UP_BUTTON ) {
-      if ( RandomSeedSeed == 255 ) RandomSeedSeed = 1;
-      else RandomSeedSeed++;
-    }
-    if ( input & DOWN_BUTTON ) { 
-      if ( RandomSeedSeed == 1 ) RandomSeedSeed = 255;
-      else RandomSeedSeed--;
+    if ( Game.ButtonOffCD() ) {
+      byte input = display.buttonsState();
+      if ( input & A_BUTTON || input & B_BUTTON ) break;
+      if ( ( input & LEFT_BUTTON ) || ( input & RIGHT_BUTTON ) ) SoundOn = !SoundOn;
+      if ( input & UP_BUTTON ) {
+        if ( RandomSeedSeed == 255 ) RandomSeedSeed = 1;
+        else RandomSeedSeed++;
+      }
+      if ( input & DOWN_BUTTON ) { 
+        if ( RandomSeedSeed == 1 ) RandomSeedSeed = 255;
+        else RandomSeedSeed--;
+      }
+      if ( input ) Game.ActivateButtonCD( );
     }
     display.clear();
     display.drawBitmap(14,0,TitleSquarioText,96,32,1);
@@ -109,9 +112,7 @@ void loop() {
   }
   display.tunes.stopScore();
   if (Game.Score) enterHighScore(1);
-  while ( !displayHighScores(1) ) {
-    delay(250);
-  }
+  displayHighScores(1);
 }
 
 //Function by nootropic design to add high scores
@@ -142,6 +143,7 @@ void enterHighScore(byte file) {
       initials[0] = ' ';
       initials[1] = ' ';
       initials[2] = ' ';
+      Game.ActivateButtonCD();
       while (true) {  //    enterInitials();
         display.clear();
         display.setCursor(16,0); display.print(F("HIGH SCORE"));
@@ -154,42 +156,45 @@ void enterHighScore(byte file) {
         display.drawLine(56, 28, 88, 28, 0);
         display.drawLine(56 + (index*8), 28, 56 + (index*8) + 6, 28, 1);
         display.display(); 
-        delay(150);
-        if ( display.pressed(LEFT_BUTTON) || display.pressed(B_BUTTON)) {
-          index--;
-          if (index < 0) index = 0;
-          else if ( SoundOn ) display.tunes.tone(1046, 250);
-        }
-        if (display.pressed(RIGHT_BUTTON)) {
-          index++;
-          if (index > 2) index = 2;
-          else if ( SoundOn ) display.tunes.tone(1046, 250);
-        }
-        if (display.pressed(DOWN_BUTTON)) {
-          initials[index]++;
-          if ( SoundOn ) display.tunes.tone(523, 250);
-          // A-Z 0-9 :-? !-/ ' '
-          if (initials[index] == '0') initials[index] = ' ';
-          if (initials[index] == '!') initials[index] = 'A';
-          if (initials[index] == '[') initials[index] = '0';
-          if (initials[index] == '@') initials[index] = '!';
-        }
-        if (display.pressed(UP_BUTTON)) {
-          initials[index]--;
-          if ( SoundOn ) display.tunes.tone(523, 250);
-          if (initials[index] == ' ') initials[index] = '?';
-          if (initials[index] == '/') initials[index] = 'Z';
-          if (initials[index] == 31) initials[index] = '/';
-          if (initials[index] == '@') initials[index] = ' ';
-        }
-        if (display.pressed(A_BUTTON)) {
-          if (index < 2) {
-            index++;
-            if ( SoundOn ) display.tunes.tone(1046, 250);
-          } else {
-            if ( SoundOn ) display.tunes.tone(1046, 250);
-            break;
+        if ( Game.ButtonOffCD() ) {
+          byte input = display.buttonsState();
+          if ( input & LEFT_BUTTON || input & B_BUTTON ) {
+            index--;
+            if (index < 0) index = 0;
+            else if ( SoundOn ) display.tunes.tone(1046, 250);
           }
+          if ( input & RIGHT_BUTTON ) {
+            index++;
+            if (index > 2) index = 2;
+            else if ( SoundOn ) display.tunes.tone(1046, 250);
+          }
+          if ( input & DOWN_BUTTON ) {
+            initials[index]++;
+            if ( SoundOn ) display.tunes.tone(523, 250);
+            // A-Z 0-9 :-? !-/ ' '
+            if (initials[index] == '0') initials[index] = ' ';
+            if (initials[index] == '!') initials[index] = 'A';
+            if (initials[index] == '[') initials[index] = '0';
+            if (initials[index] == '@') initials[index] = '!';
+          }
+          if ( input & UP_BUTTON ) {
+            initials[index]--;
+            if ( SoundOn ) display.tunes.tone(523, 250);
+            if (initials[index] == ' ') initials[index] = '?';
+            if (initials[index] == '/') initials[index] = 'Z';
+            if (initials[index] == 31) initials[index] = '/';
+            if (initials[index] == '@') initials[index] = ' ';
+          }
+          if ( input & A_BUTTON ) {
+            if (index < 2) {
+              index++;
+              if ( SoundOn ) display.tunes.tone(1046, 250);
+            } else {
+              if ( SoundOn ) display.tunes.tone(1046, 250);
+              break;
+            }
+          }
+          if ( input ) Game.ActivateButtonCD();
         }
       }
       
@@ -220,7 +225,7 @@ void enterHighScore(byte file) {
     }
   }
 }
-boolean displayHighScores(byte file) {
+void displayHighScores(byte file) {
   unsigned int Score;
   byte y = 10;
   byte x = 24;
@@ -250,6 +255,8 @@ boolean displayHighScores(byte file) {
     }
   }
   display.display();
-  if ( display.buttonsState() ) return true;
-  return false;
+  Game.ActivateButtonCD();
+  while ( true ) {
+    if ( display.buttonsState() && Game.ButtonOffCD() ) return;
+  }
 }
