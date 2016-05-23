@@ -558,9 +558,9 @@ void SquarioGame::Die( ) {
     Display->fillRect(17,9,94,46, BLACK); // Black out the inside
     Display->drawSlowXYBitmap(30,12,gameover,72,14,1);
     
-    Display->setCursor(26,29); Display->print("Score");
-    Display->setCursor(20,37); Display->print("+Dist.");
-    Display->setCursor(26,45); Display->print("Total");
+    Display->setCursor(26,29); Display->print(F("Score"));
+    Display->setCursor(20,37); Display->print(F("+Dist."));
+    Display->setCursor(26,45); Display->print(F("Total"));
 
     DiePrint( 29, Score );
     DiePrint( 37, DistancePoints );
