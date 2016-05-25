@@ -583,12 +583,44 @@ void SquarioGame::DrawMobs( ) {
   }
 }
 void SquarioGame::DrawMap( ) {
-  int mountainOffset = ( CameraX / 4 ) % 64;
-  int mountainYOffset = ( CameraY / 12 ) - 4;
+  int mountainOffset = ( CameraX / 4 ) % 128;
+  int mountainYOffset = ( CameraY / 12 ) +20;
   if ( MapNumber % 2 ) {
-    Display->drawBitmap(  0 - mountainOffset, mountainYOffset,OverworldBG,64,16,1);
-    Display->drawBitmap( 64 - mountainOffset, mountainYOffset,OverworldBG,64,16,1);
-    Display->drawBitmap(128 - mountainOffset, mountainYOffset,OverworldBG,64,16,1);
+    //Pyramid-1
+  Display->drawLine(  mountainOffset-128 , mountainYOffset+32,  mountainOffset-96 ,mountainYOffset,WHITE);
+  Display->drawLine(  mountainOffset-96 , mountainYOffset,  mountainOffset-64 ,mountainYOffset+32,WHITE);
+
+//Palmtree0
+  Display->drawLine(  mountainOffset-64 , mountainYOffset+32,  mountainOffset-64 ,mountainYOffset+16,WHITE);//Line up
+  Display->drawLine(  mountainOffset-61 , mountainYOffset+16,  mountainOffset-67 ,mountainYOffset+16,WHITE);//top line
+  Display->drawLine(  mountainOffset-61 , mountainYOffset+16,  mountainOffset-59 ,mountainYOffset+18,WHITE);//leaf1
+  Display->drawLine(  mountainOffset-67 , mountainYOffset+16,  mountainOffset-69 ,mountainYOffset+18,WHITE);//leaf2
+  Display->drawLine(  mountainOffset-63 , mountainYOffset+18,  mountainOffset-65 ,mountainYOffset+18,WHITE);//lower line
+  Display->drawLine(  mountainOffset-63 , mountainYOffset+18,  mountainOffset-61 ,mountainYOffset+20,WHITE);//leaf1
+  Display->drawLine(  mountainOffset-65 , mountainYOffset+18,  mountainOffset-67 ,mountainYOffset+20,WHITE);
+  
+ //Pyramid0
+  Display->drawLine(  mountainOffset-56 , mountainYOffset+32,  mountainOffset-32 ,mountainYOffset+8,WHITE);
+  Display->drawLine(  mountainOffset-32 , mountainYOffset+8,  mountainOffset-8 ,mountainYOffset+32,WHITE);
+  //Pyramid1
+  Display->drawLine(  mountainOffset , mountainYOffset+32,  mountainOffset+32 ,mountainYOffset,WHITE);
+  Display->drawLine(  mountainOffset+32 , mountainYOffset,  mountainOffset+64 ,mountainYOffset+32,WHITE);
+   
+   //Palmtree
+  Display->drawLine(  mountainOffset+64 , mountainYOffset+32,  mountainOffset+64 ,mountainYOffset+16,WHITE);
+  Display->drawLine(  mountainOffset+61 , mountainYOffset+16,  mountainOffset+67 ,mountainYOffset+16,WHITE);
+  Display->drawLine(  mountainOffset+61 , mountainYOffset+16,  mountainOffset+59 ,mountainYOffset+18,WHITE);
+  Display->drawLine(  mountainOffset+67 , mountainYOffset+16,  mountainOffset+69 ,mountainYOffset+18,WHITE);
+  Display->drawLine(  mountainOffset+63 , mountainYOffset+18,  mountainOffset+65 ,mountainYOffset+18,WHITE);
+  Display->drawLine(  mountainOffset+63 , mountainYOffset+18,  mountainOffset+61 ,mountainYOffset+20,WHITE);    
+  Display->drawLine(  mountainOffset+65 , mountainYOffset+18,  mountainOffset+67 ,mountainYOffset+20,WHITE);  
+    
+    //Pyramid2
+  Display->drawLine(  mountainOffset+72 , mountainYOffset+32,  mountainOffset+96 ,mountainYOffset+8,WHITE);
+  Display->drawLine(  mountainOffset+96 , mountainYOffset+8,  mountainOffset+120 ,mountainYOffset+32,WHITE);
+     //Pyramid3
+  Display->drawLine(  mountainOffset+128 , mountainYOffset+32,  mountainOffset+156 ,mountainYOffset,WHITE);
+  Display->drawLine(  mountainOffset+156 , mountainYOffset,  mountainOffset+194 ,mountainYOffset+32,WHITE);
   }
   for ( int x = CameraX / TileSize; x < (CameraX / TileSize) + 17; x++ ) {
     for ( int y = CameraY / TileSize; y < (CameraY / TileSize) + 9; y++ ) {
