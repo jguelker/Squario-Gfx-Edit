@@ -296,9 +296,9 @@ void Map::GenerateRoom( int RoomNum ) {
             else if ( MobSelector < 19 ) {
               if ( RoomNum > 8 ) Game->AddMob( StarmanoSprite, tSpawnBarrier + x, Floor - 2 );
             }
-            else { 
-              if ( RoomNum > 8 ) Game->AddMob( BoltSprite, tSpawnBarrier + x, 2 );
-            }
+            //else { 
+            //  if ( RoomNum > 8 ) Game->AddMob( BoltSprite, tSpawnBarrier + x, 2 );
+          //  }
           }
           if ( !random( 16 ) && !Gap && Floor > Ceiling + 5 ) {
             int y = random( max( Floor - 7, Ceiling + 2 ), Floor - 3 );
