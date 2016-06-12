@@ -34,6 +34,8 @@ enum ObjectTypes {
   STBricks,
   STPipeCapLeft,
   STPipeCapRight,
+STTopPipeCapLeft,
+  STTopPipeCapRight,
   STPipeLeft,
   STPipeRight,
   
@@ -44,6 +46,7 @@ enum EventTypes {
   ETPlaying,
   ETDeath,
   ETPipeDrop,
+  ETPipeRise,
   ETNum
 };
 
@@ -126,6 +129,7 @@ class Map {
     byte CheckObject( int x, int y );
     bool CheckTile( int x, int y );
     void AddPipe( int x, int y );
+void AddTopPipe( int x, int y );
 
     int MinXPixel();
     int MaxXPixel();
@@ -146,6 +150,7 @@ class SquarioGame {
     SquarioGame( Arduboy * display );
     void NewGame( );
     void StartLevel( );
+    int  SpawnY( );
     void Cycle( );
     bool TestCollision( Sprite * TestSprite1, AISprite * TestSprite2 );
     bool TestRoughCollision( Sprite * TestSprite1, AISprite * TestSprite2 );
@@ -154,6 +159,7 @@ class SquarioGame {
     void Die( );
     void DiePrint( uint8_t y, unsigned int i );
     void DrawMap( );
+    void DrawPlayer( );
     void DrawMobs( );
     void AddMob( const unsigned char * DataPointer, int x, int y );
     void AdjustCamera( );
@@ -170,6 +176,7 @@ class SquarioGame {
     AISprite              Mobs[ SpriteCap ];
     Map                   Level;
 
+   int                   Health;
     unsigned int          Score;
     unsigned int          DistancePoints;
     int                   Coins, Lives, MapNumber;
